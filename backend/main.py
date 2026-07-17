@@ -9,7 +9,12 @@ app = FastAPI()
 # Without this, the browser will block requests from React (localhost:5173) to FastAPI (localhost:8000)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ["http://localhost:5173"],   # only allow requests from our React app
+    allow_origins=[
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    ],   # only allow requests from our React app
+    # allow_origins=["*"] # for testing purposes
     allow_credentials=True,
     allow_methods=["*"],                       # allow all HTTP methods (GET, POST etc.)
     allow_headers=["*"],                       # allow all headers
