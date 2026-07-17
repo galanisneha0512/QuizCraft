@@ -1,15 +1,14 @@
 import os                                        # to read environment variables
 import json                                      # to parse the AI response into a Python dict
-import google.generativeai as genai              # Gemini SDK
+from google import genai                         # Gemini SDK
 from dotenv import load_dotenv                   # to load variables from .env file
 
 load_dotenv()                                    # loads .env file so we can use os.getenv()
 
 # Configure the Gemini SDK with our API key
-genai.configure(api_key = os.getenv("GEMINI_API_KEY"))
-
-# Initialize the Gemini model we want to use
-model = genai.GenerativeModel("gemini-2.5-flash")
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
 def generate_quiz(text : str, num_questions: int, questionTypes: list, difficulty: str):
     """
@@ -65,7 +64,10 @@ def generate_quiz(text : str, num_questions: int, questionTypes: list, difficult
     """
 
     # Send the prompt to Gemini and wait for response
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.1-flash-lite",
+        contents=prompt,
+    )
 
     # response.text contains the raw text returned by Gemini
     raw = response.text.strip()
