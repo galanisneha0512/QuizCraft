@@ -25,6 +25,7 @@ dist-ssr
 
 # Environment variables
 .env
+backend/.env
 
 # Python virtual environment
 .venv/
